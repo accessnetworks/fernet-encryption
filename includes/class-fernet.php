@@ -71,7 +71,7 @@ class Fernet {
 	 * @param string $key The Fernet key, encoded in base64url format.
 	 * @throws \Exception If the key is not a base64url encoded string or libraries missing.
 	 */
-	public function __construct( $key ) {
+	public function __construct( string $key ) {
 		if ( ! function_exists( 'openssl_random_pseudo_bytes' ) && ! function_exists( 'mcrypt_create_iv' ) ) {
 			throw new \Exception( 'No backend library found' );
 		}
@@ -92,7 +92,7 @@ class Fernet {
 	 * @param string $message the message to be encoded in the token.
 	 * @return string the token.
 	 */
-	public function encode( $message ) {
+	public function encode( string $message ) {
 		$iv = $this->get_iv();
 
 		// PKCS7 padding.
@@ -122,7 +122,7 @@ class Fernet {
 	 * @param int    $ttl the maximum number of seconds since the creation of the token for the token to be considered valid.
 	 * @return string|null the decoded message, or null if the token is invalid for whatever reason.
 	 */
-	public function decode( $token, $ttl = null ) {
+	public function decode( string $token, int $ttl = null ) {
 		$raw = self::base64url_decode( $token );
 
 		$hash          = substr( $raw, -32 );
@@ -213,7 +213,7 @@ class Fernet {
 	 * @param string $str2 String 2.
 	 * @return bool true if the two strings are equal.
 	 */
-	protected function secure_compare( $str1, $str2 ) {
+	protected function secure_compare( string $str1, string $str2 ) {
 		if ( function_exists( 'hash_equals' ) ) {
 			return hash_equals( $str1, $str2 );
 		}

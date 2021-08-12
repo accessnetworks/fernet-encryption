@@ -55,7 +55,8 @@ function fernet_key() {
  * @return string $data Encoded data.
  */
 function fernet_encrypt( $data, $args = array() ) {
-	$fernet = fernet();
+	$key    = isset( $args['key'] ) ? $args['key'] : fernet_key();
+	$fernet = fernet( $key );
 	return $fernet->encode( $data );
 }
 
@@ -67,6 +68,8 @@ function fernet_encrypt( $data, $args = array() ) {
  * @return string $data Decoded data.
  */
 function fernet_decrypt( string $token, $args = array() ) {
-	$fernet = fernet();
-	return $fernet->decode( $token );
+	$key    = isset( $args['key'] ) ? $args['key'] : fernet_key();
+	$ttl    = isset( $args['ttl'] ) ? abs( $args['ttl'] ) : null;
+	$fernet = fernet( $key );
+	return $fernet->decode( $token, $ttl );
 }
