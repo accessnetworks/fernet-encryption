@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: Secure with Fernet
- * Description: Secure data with Fernet.
+ * Plugin Name: Fernet Encryption.
+ * Description: Secure WordPress data with Fernet.
  * Version: 1.0.0
  * Author: Access Networks.
  * Author URI: https://www.accessnetworks.com
