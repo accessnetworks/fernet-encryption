@@ -1,5 +1,11 @@
 <?php
 /**
+ * Fernet Class.
+ *
+ * @package fernet-encryption
+ */
+
+/**
  * Fernet-PHP
  *
  * Copyright (C) Kelvin Mo 2014
@@ -60,7 +66,8 @@ class Fernet {
 	/**
 	 * Creates an instance of the Fernet encoder/decoder.
 	 *
-	 * @param string $key the Fernet key, encoded in base64url format.
+	 * @param string $key The Fernet key, encoded in base64url format.
+	 * @throws \Exception If the key is not a base64url encoded string or libraries missing.
 	 */
 	public function __construct( $key ) {
 		if ( ! function_exists( 'openssl_random_pseudo_bytes' ) && ! function_exists( 'mcrypt_create_iv' ) ) {
