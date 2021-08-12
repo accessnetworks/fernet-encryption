@@ -1,8 +1,15 @@
+/**
+ *
+ * Gruntfile.
+ *
+ * @package fernet-encryption
+ **/
+
 module.exports = function( grunt ) {
 
 	'use strict';
 
-	// Project configuration
+	// Project configuration.
 	grunt.initConfig(
 		{
 

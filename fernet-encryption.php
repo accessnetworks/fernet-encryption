@@ -1,5 +1,11 @@
 <?php
 /**
+ * Fernet Encryption for WordPress
+ *
+ * @package fernet-encryption
+ */
+
+/**
  * Plugin Name: Fernet Encryption
  * Plugin URI: https://www.accessnetworks.com
  * Description: Secure WordPress data with Fernet Encryption.
@@ -45,10 +51,10 @@ function fernet_key() {
  * Fernet Encode.
  *
  * @param [type] $data Data to be encoded.
+ * @param array  $args Arguments.
  * @return string $data Encoded data.
- * @return array $args Arguments.
  */
-function fernet_encode( $data, $args = array() ) {
+function fernet_encrypt( $data, $args = array() ) {
 	$fernet = fernet();
 	return $fernet->encode( $data );
 }
@@ -56,21 +62,11 @@ function fernet_encode( $data, $args = array() ) {
 /**
  * Fernet Decode.
  *
- * @param [type] $token Token to decode.
+ * @param string $token Token to decode.
+ * @param array  $args Arguments.
  * @return string $data Decoded data.
- * @return array $args Arguments.
  */
-function fernet_decode( $token, $args = array() ) {
+function fernet_decrypt( string $token, $args = array() ) {
 	$fernet = fernet();
 	return $fernet->decode( $token );
-}
-
-add_action( 'wp_head', 'test' );
-function test() {
-
-	$token = fernet_encode( 'XOFRXLajAYVQJNNq' );
-	echo $token . '<br>';
-	$blah = fernet_decode( $token );
-	echo $blah;
-
 }
