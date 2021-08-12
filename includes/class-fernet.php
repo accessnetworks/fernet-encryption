@@ -98,7 +98,7 @@ class Fernet {
 		$message .= str_repeat( chr( $pad ), $pad );
 
 		if ( function_exists( 'openssl_encrypt' ) ) {
-			$ciphertext = base64_decode( openssl_encrypt( $message, 'aes-128-cbc', $this->encryption_key, OPENSSL_ZERO_PADDING, $iv ) );
+			$ciphertext = base64_decode( openssl_encrypt( $message, 'aes-128-cbc', $this->encryption_key, OPENSSL_ZERO_PADDING, $iv ) ); // phpcs:ignore
 		} elseif ( function_exists( 'mcrypt_encrypt' ) ) {
 			$ciphertext = mcrypt_encrypt( MCRYPT_RIJNDAEL_128, $this->encryption_key, $message, 'cbc', $iv );
 		}
@@ -160,7 +160,7 @@ class Fernet {
 		$ciphertext = substr( $signing_base, 25 );
 
 		if ( function_exists( 'openssl_decrypt' ) ) {
-			$message = openssl_decrypt( base64_encode( $ciphertext ), 'aes-128-cbc', $this->encryption_key, OPENSSL_ZERO_PADDING, $iv );
+			$message = openssl_decrypt( base64_encode( $ciphertext ), 'aes-128-cbc', $this->encryption_key, OPENSSL_ZERO_PADDING, $iv ); // phpcs:ignore
 		} elseif ( function_exists( 'mcrypt_decrypt' ) ) {
 			$message = mcrypt_decrypt( MCRYPT_RIJNDAEL_128, $this->encryption_key, $ciphertext, 'cbc', $iv );
 		}
@@ -228,6 +228,7 @@ class Fernet {
 	 * Generates a random key for use in Fernet tokens.
 	 *
 	 * @return string A base64url encoded key.
+	 * @throws \Exception If libraries are missing.
 	 */
 	public static function generate_key() {
 		if ( function_exists( 'openssl_random_pseudo_bytes' ) ) {
@@ -248,7 +249,7 @@ class Fernet {
 	 * @link http://tools.ietf.org/html/rfc4648#section-5
 	 */
 	public static function base64url_encode( $data, $pad = true ) {
-		$encoded = strtr( base64_encode( $data ), '+/', '-_' );
+		$encoded = strtr( base64_encode( $data ), '+/', '-_' ); // phpcs:ignore
 		if ( ! $pad ) {
 			$encoded = trim( $encoded, '=' );
 		}
@@ -263,7 +264,7 @@ class Fernet {
 	 * @link http://tools.ietf.org/html/rfc4648#section-5
 	 */
 	public static function base64url_decode( $data ) {
-		return base64_decode( strtr( $data, '-_', '+/' ) );
+		return base64_decode( strtr( $data, '-_', '+/' ) ); // phpcs:ignore
 	}
 }
 
