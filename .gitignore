@@ -1,0 +1,10 @@
+# Ignore Vendor dependencies directories.
+vendor/*
+
+# Ignore node dependency directories.
+node_modules/
+
+# Ignore log files and databases.
+*.log
+*.sql
+*.sqlite

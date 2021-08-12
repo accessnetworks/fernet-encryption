@@ -7,7 +7,7 @@ Author: Access Networks.
 Author URI: https://www.accessnetworks.com
 */
 
-include_once( 'includes/class-fernet.php');
+require_once 'includes/class-fernet.php';
 
 
 /**
@@ -27,10 +27,10 @@ function fernet() {
  */
 function fernet_key() {
 
-	if( ! defined( 'FERNET_KEY' ) ) {
-		$key = substr( NONCE_SALT , 0, 44 );
+	if ( ! defined( 'FERNET_KEY' ) ) {
+		$key = substr( NONCE_SALT, 0, 44 );
 		define( 'FERNET_KEY', $key );
-	} else  {
+	} else {
 		$key = FERNET_KEY;
 	}
 
