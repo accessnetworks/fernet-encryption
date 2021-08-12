@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Fernet-PHP
  *
  * Copyright (C) Kelvin Mo 2014
@@ -31,7 +31,7 @@
  * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+ **/
 
 
 /**
@@ -43,13 +43,24 @@ class Fernet {
 
 	const VERSION = "\x80";
 
+	/**
+	 * Encryption Key.
+	 *
+	 * @var string
+	 */
 	private $encryption_key;
+
+	/**
+	 * Signing Key.
+	 *
+	 * @var string
+	 */
 	private $signing_key;
 
 	/**
-	 * Creates an instance of the Fernet encoder/decoder
+	 * Creates an instance of the Fernet encoder/decoder.
 	 *
-	 * @param string $key the Fernet key, encoded in base64url format
+	 * @param string $key the Fernet key, encoded in base64url format.
 	 */
 	public function __construct( $key ) {
 		if ( ! function_exists( 'openssl_random_pseudo_bytes' ) && ! function_exists( 'mcrypt_create_iv' ) ) {
@@ -58,7 +69,7 @@ class Fernet {
 
 		$key = self::base64url_decode( $key );
 
-		if ( strlen( $key ) != 32 ) {
+		if ( strlen( $key ) !== 32 ) {
 			throw new \Exception( 'Incorrect key' );
 		}
 
@@ -69,13 +80,13 @@ class Fernet {
 	/**
 	 * Encodes a Fernet token.
 	 *
-	 * @param string $message the message to be encoded in the token
-	 * @return string the token
+	 * @param string $message the message to be encoded in the token.
+	 * @return string the token.
 	 */
 	public function encode( $message ) {
-		$iv = $this->getIV();
+		$iv = $this->get_iv();
 
-		// PKCS7 padding
+		// PKCS7 padding.
 		$pad      = 16 - ( strlen( $message ) % 16 );
 		$message .= str_repeat( chr( $pad ), $pad );
 
@@ -85,10 +96,10 @@ class Fernet {
 			$ciphertext = mcrypt_encrypt( MCRYPT_RIJNDAEL_128, $this->encryption_key, $message, 'cbc', $iv );
 		}
 
-		if ( PHP_INT_SIZE == 8 ) {
-			$signing_base = self::VERSION . pack( 'J', $this->getTime() ) . $iv . $ciphertext;
+		if ( PHP_INT_SIZE === 8 ) {
+			$signing_base = self::VERSION . pack( 'J', $this->get_time() ) . $iv . $ciphertext;
 		} else {
-			$signing_base = self::VERSION . pack( 'NN', 0, $this->getTime() ) . $iv . $ciphertext;
+			$signing_base = self::VERSION . pack( 'NN', 0, $this->get_time() ) . $iv . $ciphertext;
 		}
 
 		$hash = hash_hmac( 'sha256', $signing_base, $this->signing_key, true );
@@ -98,11 +109,9 @@ class Fernet {
 	/**
 	 * Decodes a Fernet token.
 	 *
-	 * @param string $token the token to decode
-	 * @param int    $ttl the maximum number of seconds since the creation of the
-	 *    token for the token to be considered valid
-	 * @return string|null the decoded message, or null if the token is invalid
-	 * for whatever reason.
+	 * @param string $token the token to decode.
+	 * @param int    $ttl the maximum number of seconds since the creation of the token for the token to be considered valid.
+	 * @return string|null the decoded message, or null if the token is invalid for whatever reason.
 	 */
 	public function decode( $token, $ttl = null ) {
 		$raw = self::base64url_decode( $token );
@@ -114,28 +123,28 @@ class Fernet {
 		if ( ! is_string( $hash ) ) {
 			return null;
 		}
-		if ( ! $this->secureCompare( $hash, $expected_hash ) ) {
+		if ( ! $this->secure_compare( $hash, $expected_hash ) ) {
 			return null;
 		}
 
-		if ( PHP_INT_SIZE == 8 ) {
+		if ( PHP_INT_SIZE === 8 ) {
 			$parts = unpack( 'Cversion/Jtime', substr( $signing_base, 0, 9 ) );
 		} else {
 			$parts = unpack( 'Cversion/Ndummy/Ntime', substr( $signing_base, 0, 9 ) );
 
-			// If $parts['dummy'] is not zero, this means the timestamp in the token
-			// is beyond the 32 bit limit
-			if ( $parts['dummy'] != 0 ) {
+			// If $parts['dummy'] is not zero, this means the timestamp in the token.
+			// is beyond the 32 bit limit.
+			if ( 0 !== $parts['dummy'] ) {
 				return null;
 			}
 		}
 
-		if ( chr( $parts['version'] ) != self::VERSION ) {
+		if ( chr( $parts['version'] ) !== self::VERSION ) {
 			return null;
 		}
 
-		if ( $ttl != null ) {
-			if ( $parts['time'] + $ttl < $this->getTime() ) {
+		if ( null !== $ttl ) {
+			if ( $parts['time'] + $ttl < $this->get_time() ) {
 				return null;
 			}
 		}
@@ -148,12 +157,12 @@ class Fernet {
 		} elseif ( function_exists( 'mcrypt_decrypt' ) ) {
 			$message = mcrypt_decrypt( MCRYPT_RIJNDAEL_128, $this->encryption_key, $ciphertext, 'cbc', $iv );
 		}
-		if ( $message === false ) {
+		if ( false === $message ) {
 			return null;
 		}
 
 		$pad = ord( $message[ strlen( $message ) - 1 ] );
-		if ( substr_count( substr( $message, -$pad ), chr( $pad ) ) != $pad ) {
+		if ( substr_count( substr( $message, -$pad ), chr( $pad ) ) !== $pad ) {
 			return null;
 		}
 
@@ -161,12 +170,11 @@ class Fernet {
 	}
 
 	/**
-	 * Generates an initialisation vector for AES encryption
+	 * Generates an initialisation vector for AES encryption.
 	 *
-	 * @return string a bytestream containing an initialisation
-	 * vector
+	 * @return string a bytestream containing an initialisation vector.
 	 */
-	protected function getIV() {
+	protected function get_iv() {
 		if ( function_exists( 'random_bytes' ) ) {
 			return random_bytes( 16 );
 		} elseif ( function_exists( 'openssl_random_pseudo_bytes' ) ) {
@@ -181,28 +189,28 @@ class Fernet {
 	 *
 	 * This method is required to facilitate unit testing.
 	 *
-	 * @return int the current time
+	 * @return int the current time.
 	 */
-	protected function getTime() {
+	protected function get_time() {
 		return ( new \DateTime() )->getTimestamp();
 	}
 
 	/**
 	 * Compares two strings using the same time whether they're equal or not.
-	 * This function should be used to mitigate timing attacks when, for
-	 * example, comparing password hashes
+	 * This function should be used to mitigate timing attacks when, for.
+	 * example, comparing password hashes.
 	 *
-	 * @param string $str1
-	 * @param string $str2
-	 * @return bool true if the two strings are equal
+	 * @param string $str1 String 1.
+	 * @param string $str2 String 2.
+	 * @return bool true if the two strings are equal.
 	 */
-	protected function secureCompare( $str1, $str2 ) {
+	protected function secure_compare( $str1, $str2 ) {
 		if ( function_exists( 'hash_equals' ) ) {
 			return hash_equals( $str1, $str2 );
 		}
 
 		$xor    = $str1 ^ $str2;
-		$result = strlen( $str1 ) ^ strlen( $str2 ); // not the same length, then fail ($result != 0)
+		$result = strlen( $str1 ) ^ strlen( $str2 ); // Not the same length, then fail ($result != 0).
 		for ( $i = strlen( $xor ) - 1; $i >= 0; $i-- ) {
 			$result += ord( $xor[ $i ] );
 		}
@@ -210,11 +218,11 @@ class Fernet {
 	}
 
 	/**
-	 * Generates a random key for use in Fernet tokens
+	 * Generates a random key for use in Fernet tokens.
 	 *
-	 * @return string a base64url encoded key
+	 * @return string A base64url encoded key.
 	 */
-	public static function generateKey() {
+	public static function generate_key() {
 		if ( function_exists( 'openssl_random_pseudo_bytes' ) ) {
 			$key = openssl_random_pseudo_bytes( 32 );
 		} elseif ( function_exists( 'mcrypt_create_iv' ) ) {
@@ -227,9 +235,9 @@ class Fernet {
 	/**
 	 * Encodes data encoded with Base 64 Encoding with URL and Filename Safe Alphabet.
 	 *
-	 * @param string $data the data to encode
-	 * @param bool   $pad whether padding characters should be included
-	 * @return string the encoded data
+	 * @param string $data the data to encode.
+	 * @param bool   $pad whether padding characters should be included.
+	 * @return string the encoded data.
 	 * @link http://tools.ietf.org/html/rfc4648#section-5
 	 */
 	public static function base64url_encode( $data, $pad = true ) {
@@ -243,7 +251,7 @@ class Fernet {
 	/**
 	 * Decodes data encoded with Base 64 Encoding with URL and Filename Safe Alphabet.
 	 *
-	 * @param string $data the encoded data
+	 * @param string $data the encoded data.
 	 * @return string|bool the original data or FALSE on failure. The returned data may be binary.
 	 * @link http://tools.ietf.org/html/rfc4648#section-5
 	 */
