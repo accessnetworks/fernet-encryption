@@ -39,6 +39,8 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  **/
 
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 /**
  * An implementation of the Fernet token specification in PHP.
