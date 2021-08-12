@@ -1,10 +1,15 @@
 <?php
 /**
  * Plugin Name: Fernet Encryption.
+ * Plugin URI: https://www.accessnetworks.com
  * Description: Secure WordPress data with Fernet.
  * Version: 1.0.0
  * Author: Access Networks.
  * Author URI: https://www.accessnetworks.com
+ * Text Domain: fernet-encryption
+ * Domain Path: /i18n/languages/
+ * Requires at least: 5.5
+ * Requires PHP: 7.0
 */
 
 require_once 'includes/class-fernet.php';
