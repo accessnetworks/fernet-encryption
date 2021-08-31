@@ -5,7 +5,7 @@ Tags: fernet, encryption
 Requires at least: 4.5
 Tested up to: 5.8
 Requires PHP: 7.0
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -36,7 +36,7 @@ You can also now encrypt or decrypt using shortcodes:
 
 == Changelog ==
 
-= 1.0.2 =
+= 1.0.3 =
 * Updated Readme.
 * Provided shortcodes for encrypting and decrypting.
 
