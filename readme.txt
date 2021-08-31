@@ -1,19 +1,19 @@
 === Fernet Encryption ===
-Contributors: (this should be a list of wordpress.org userid's)
+Contributors: bhubbard, accessnetworks
 Donate link: https://accessnetworks.com
 Tags: fernet, encryption
 Requires at least: 4.5
 Tested up to: 5.8
 Requires PHP: 7.0
-Stable tag: 1.0.0
+Stable tag: 1.0.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+Fernet Encryption is a plugin that can be used to encrypt and decrypt data in WordPress using fernet.
 
 == Description ==
 
-Fernet Encryption is a utility plugin that can be used to encrypt and decrypt data in WordPress using fernet.
+Fernet Encryption is a plugin that can be used to encrypt and decrypt data in WordPress using fernet.
 
 === Setup your Key ===
 
@@ -29,6 +29,9 @@ To decrypt the data simply use `fernet_decrypt( $token )` in your code.
 
 
 == Changelog ==
+
+= 1.0.2 =
+* Update Readme.
 
 = 1.0.0 =
 * First release.
