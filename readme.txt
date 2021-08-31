@@ -31,8 +31,8 @@ To decrypt the data simply use `fernet_decrypt( $token )` in your code.
 == Changelog ==
 
 = 1.0.2 =
-* Update Readme.
+* Updated Readme.
+* Provided shortcodes for encrypting and decrypting.
 
 = 1.0.0 =
 * First release.
-

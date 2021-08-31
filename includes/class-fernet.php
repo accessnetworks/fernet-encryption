@@ -73,13 +73,13 @@ class Fernet {
 	 */
 	public function __construct( string $key ) {
 		if ( ! function_exists( 'openssl_random_pseudo_bytes' ) && ! function_exists( 'mcrypt_create_iv' ) ) {
-			throw new \Exception( 'No backend library found' );
+			return new WP_Error( 'missing-libraries', __( 'Fernet Encryption requires mcrypt_create_iv and openssl_random_pseudo_bytes.', 'fernet-encryption' ) );
 		}
 
 		$key = self::base64url_decode( $key );
 
 		if ( strlen( $key ) !== 32 ) {
-			throw new \Exception( 'Incorrect key' );
+			return new WP_Error( 'invalid-key-length', __( 'The key length appears to be invalid.', 'fernet-encryption' ) );
 		}
 
 		$this->signing_key    = substr( $key, 0, 16 );
@@ -238,7 +238,7 @@ class Fernet {
 		} elseif ( function_exists( 'mcrypt_create_iv' ) ) {
 			$key = mcrypt_create_iv( 32 );
 		} else {
-			throw new \Exception( 'No backend library found' );
+			return new WP_Error( 'missing-libraries', __( 'Fernet Encryption requires mcrypt_create_iv and openssl_random_pseudo_bytes.', 'fernet-encryption' ) );
 		}
 		return self::base64url_encode( $key );
 	}
@@ -269,4 +269,3 @@ class Fernet {
 		return base64_decode( strtr( $data, '-_', '+/' ) ); // phpcs:ignore
 	}
 }
-

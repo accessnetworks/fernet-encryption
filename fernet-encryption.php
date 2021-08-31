@@ -73,3 +73,26 @@ function fernet_decrypt( string $token, $args = array() ) {
 	$fernet = fernet( $key );
 	return $fernet->decode( $token, $ttl );
 }
+
+/**
+ * Fernet Encrypt Shortcode.
+ * @param  [type] $atts Attributes for Shortcode.
+ * @param  [type] $content Content.
+ * @return $content.
+ */
+function fernet_encrypt_shortcode( $atts, $content = null ) {
+	return fernet_encrypt( $content );
+}
+add_shortcode( 'fernet-encrypt', 'fernet_encrypt_shortcode' );
+
+
+/**
+ * Fernet Encrypt Shortcode.
+ * @param  [type] $atts Attributes for Shortcode.
+ * @param  [type] $content Content.
+ * @return $content.
+ */
+function fernet_decrypt_shortcode( $atts, $content = null ) {
+	return fernet_decrypt( $content );
+}
+add_shortcode( 'fernet-decrypt', 'fernet_decrypt_shortcode' );
