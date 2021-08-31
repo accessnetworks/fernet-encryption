@@ -27,6 +27,12 @@ To encrypt data simply use `$token = fernet_encrypt( 'YOUR MESSAGE' )` in your c
 
 To decrypt the data simply use `fernet_decrypt( $token )` in your code.
 
+You can also now encrypt or decrypt using shortcodes:
+
+```[fernet-encrypt]YOUR MESSAGE[/fernet-encrypt]```
+
+```[fernet-decrypt]YOUR-FERNET-TOKEN[/fernet-decrypt]```
+
 
 == Changelog ==
 
