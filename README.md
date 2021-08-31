@@ -15,3 +15,9 @@ To setup your key, you need to add the following line to your wp-config file.
 To encrypt data simply use `$token = fernet_encrypt( 'YOUR MESSAGE' )` in your code.
 
 To decrypt the data simply use `fernet_decrypt( $token )` in your code.
+
+You can also encrypt or decrypt using shortcodes:
+
+```[fernet-encrypt]YOUR MESSAGE[/fernet-encrypt]```
+
+```[fernet-decrypt]YOUR-FERNET-TOKEN[/fernet-decrypt]```
