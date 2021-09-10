@@ -10,14 +10,20 @@ jobs:
         operating-system: [ubuntu-latest]
         php-versions: ['7.3', '7.4']
     name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
+    
+    env:
+      DB_DATABASE: test_db
+      DB_USER: root
+      DB_PASSWORD: root
+
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Setup MySQL
-      uses: jordiprats/mysql-action@v1.1
-      with:
-        mysql version: '8.0'
+    - name: Set up MySQL
+      run: |
+      sudo /etc/init.d/mysql start
+      mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -33,9 +39,10 @@ jobs:
 
     - name: Composer install
       run: composer install
-    
+
     - name: Install WP Tests
-      run: bash bin/install-wp-tests.sh wordpress_test root root localhost latest
-      
+      run: bash bin/install-wp-tests.sh wordpress_test root root test_db latest
+
     - name: phpunit tests
       run: ./vendor/bin/phpunit
+      
