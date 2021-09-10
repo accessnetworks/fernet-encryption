@@ -41,7 +41,7 @@ jobs:
       run: composer install
 
     - name: Install WP Tests
-      run: bash bin/install-wp-tests.sh wordpress_test env.DB_USER env.DB_PASSWORD env.DB_DATABASE latest
+      run: bash bin/install-wp-tests.sh localhost env.DB_USER env.DB_PASSWORD env.DB_DATABASE latest
 
     - name: phpunit tests
       run: ./vendor/bin/phpunit
