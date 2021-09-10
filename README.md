@@ -1,5 +1,5 @@
 # Fernet Encryption for WordPress
-Secure data in WordPress with Fernet.
+Secure data in WordPress with Fernet Encryption.
 
 
 ## Description
