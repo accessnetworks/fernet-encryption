@@ -44,6 +44,9 @@ You can use the following shortcode to decrypt:
 
 == Changelog ==
 
+= 1.0.4 =
+* Updated Readme
+
 = 1.0.3 =
 * Updated Readme.
 * Provided shortcodes for encrypting and decrypting.
