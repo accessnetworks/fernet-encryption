@@ -19,7 +19,7 @@ Fernet Encryption is a plugin that can be used to encrypt and decrypt data in Wo
 
 To setup your key, you need to add the following line to your wp-config file.
 
-```define( 'FERNET_KEY', 'YOUR_FERNET_KEY' );```
+`define( 'FERNET_KEY', 'YOUR_FERNET_KEY' );`
 
 === How to Use ===
 
@@ -27,11 +27,19 @@ To encrypt data simply use `$token = fernet_encrypt( 'YOUR MESSAGE' )` in your c
 
 To decrypt the data simply use `fernet_decrypt( $token )` in your code.
 
-You can also now encrypt or decrypt using shortcodes:
+You can use the following shortcode to encrypt:
 
-```[fernet-encrypt]YOUR MESSAGE[/fernet-encrypt]```
+`[fernet-encrypt]YOUR MESSAGE[/fernet-encrypt]`
 
-```[fernet-decrypt]YOUR-FERNET-TOKEN[/fernet-decrypt]```
+You can use the following shortcode to decrypt:
+
+`[fernet-decrypt]YOUR-FERNET-TOKEN[/fernet-decrypt]`
+
+=== Credit ===
+
+- Illustrations provided by undraw.co
+- Fernent PHP modified from Kelvin Mo - Fernet-PHP
+
 
 
 == Changelog ==
