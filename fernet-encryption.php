@@ -33,6 +33,16 @@ if ( ! function_exists( 'fernet' ) ) {
 	}
 }
 
+if ( ! function_exists( 'fernet_generate_key' ) ) {
+	/**
+	 * Feneret Generate Key.
+	 */
+	function fernet_generate_key() {
+		$fernet = new Fernet( fernet_key() );
+		return $fernet->generate_key();
+	}
+}
+
 if ( ! function_exists( 'fernet_key' ) ) {
 	/**
 	 * Fernet Key
@@ -81,4 +91,11 @@ if ( ! function_exists( 'fernet_decrypt' ) ) {
 		$fernet = fernet( $key );
 		return $fernet->decode( $token, $ttl );
 	}
+}
+
+
+add_action('wp_head', 'test');
+function test() {
+	$fernet = new Fernet( fernet_key() );
+	var_dump( $fernet->generate_key() );
 }
