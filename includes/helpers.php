@@ -5,134 +5,145 @@
  * @package fernet-encryption
  */
 
+ // Exit if accessed directly.
+ defined( 'ABSPATH' ) || exit;
 
- /**
-  * Fernet Add Post Meta.
-  * @param [type]  $post_id     [description]
-  * @param [type]  $meta_key    [description]
-  * @param [type]  $meta_value  [description]
-  * @param boolean $unique      [description]
-  */
- function fernet_add_post_meta( $post_id, $meta_key, $meta_value, $unique = false ) {
- 	$meta_value = fernet_encrypt( $meta_value );
- 	return add_post_meta( $post_id, $meta_key, $meta_value, $unique );
- }
-
- /**
-  * Fernet Update Post Meta.
-  * @param  [type] $post_id                  [description]
-  * @param  [type] $meta_key                 [description]
-  * @param  [type] $meta_value               [description]
-  * @param  string $prev_value               [description]
-  * @return [type]             [description]
-  */
- function fernet_update_post_meta( $post_id, $meta_key, $meta_value, $prev_value = '' ) {
- 	$meta_value = fernet_encrypt( $meta_value );
- 	return update_post_meta( $post_id, $meta_key, $meta_value, $prev_value );
- }
-
- /**
-  * Fernet Get Post Meta.
-  * @param  [type]  $post_id               [description]
-  * @param  string  $key                   [description]
-  * @param  boolean $single                [description]
-  * @return [type]           [description]
-  */
- function fernet_get_post_meta( $post_id, $key = '', $single = false ) {
-
-	 if( true === $single ) {
-		 return fernet_decrypt( get_post_meta( $post_id, $key, $single ) );
+if( ! function_exists( 'fernet_add_post_meta' ) ) {
+	 /**
+	  * Fernet Add Post Meta.
+	  * @param [type]  $post_id     Post ID.
+	  * @param [type]  $meta_key    Meta Key.
+	  * @param [type]  $meta_value  Meta Value.
+	  * @param boolean $unique      Unique.
+	  */
+	 function fernet_add_post_meta( $post_id, $meta_key, $meta_value, $unique = false ) {
+	 	$meta_value = fernet_encrypt( $meta_value );
+	 	return add_post_meta( $post_id, $meta_key, $meta_value, $unique );
 	 }
+}
 
-	 if( false === $single ) {
-		 $meta = get_post_meta( $post_id, $key, $single );
-		 foreach( $meta as $meta_value ) {
-			 $meta[] = fernet_decrypt( $meta_value );
+if( ! function_exists( 'fernet_update_post_meta' ) ) {
+	 /**
+	  * Fernet Update Post Meta.
+	  * @param  [type] $post_id                  Post ID.
+	  * @param  [type] $meta_key                 Meta Key.
+	  * @param  [type] $meta_value               Meta Value.
+	  * @param  string $prev_value               Previous Value.
+	  */
+	 function fernet_update_post_meta( $post_id, $meta_key, $meta_value, $prev_value = '' ) {
+	 	$meta_value = fernet_encrypt( $meta_value );
+	 	return update_post_meta( $post_id, $meta_key, $meta_value, $prev_value );
+	 }
+}
+
+if( ! function_exists( 'fernet_get_post_meta' ) ) {
+	 /**
+	  * Fernet Get Post Meta.
+	  * @param  [type]  $post_id               Post ID.
+	  * @param  string  $key                   Key.
+	  * @param  boolean $single                Single.
+	  */
+	 function fernet_get_post_meta( $post_id, $key = '', $single = false ) {
+		 if( true === $single ) {
+			 return fernet_decrypt( get_post_meta( $post_id, $key, $single ) );
 		 }
-		 return $meta;
+		 if( false === $single ) {
+			 $meta = get_post_meta( $post_id, $key, $single );
+			 foreach( $meta as $meta_value ) {
+				 $meta[] = fernet_decrypt( $meta_value );
+			 }
+			 return $meta;
+		 }
 	 }
+}
 
- }
+if( ! function_exists( 'fernet_add_user_meta' ) ) {
+	 /**
+	  * Fernet Add User Meta.
+	  * @param [type]  $user_id    User ID.
+	  * @param [type]  $meta_key   Meta Key.
+	  * @param [type]  $meta_value  Meta Value.
+	  * @param boolean $unique      Unique.
+	  */
+	 function fernet_add_user_meta( $user_id, $meta_key, $meta_value, $unique = false ) {
+	 	$meta_value = fernet_encrypt( $meta_value );
+	 	return add_user_meta( $user_id, $meta_key, $meta_value, $unique );
+	 }
+}
 
- /**
-  * Fernet Add User Meta.
-  * @param [type]  $user_id     [description]
-  * @param [type]  $meta_key    [description]
-  * @param [type]  $meta_value  [description]
-  * @param boolean $unique      [description]
-  */
- function fernet_add_user_meta( $user_id, $meta_key, $meta_value, $unique = false ) {
- 	$meta_value = fernet_encrypt( $meta_value );
- 	return add_user_meta( $user_id, $meta_key, $meta_value, $unique );
- }
+if( ! function_exists( 'fernet_update_user_meta' ) ) {
+	 /**
+	  * Fernet Update User Meta.
+	  * @param  [type] $user_id                 User ID.
+	  * @param  [type] $meta_key                Meta Key.
+	  * @param  [type] $meta_value              Meta value.
+	  * @param  string $prev_value              Previous Value.
+	  */
+	 function fernet_update_user_meta( $user_id, $meta_key, $meta_value, $prev_value = '' ) {
+	 	$meta_value = fernet_encrypt( $meta_value );
+	 	return update_user_meta( $user_id, $meta_key, $meta_value, $prev_value );
+	 }
+}
 
- /**
-  * Fernet Update User Meta.
-  * @param  [type] $user_id                  [description]
-  * @param  [type] $meta_key                 [description]
-  * @param  [type] $meta_value               [description]
-  * @param  string $prev_value               [description]
-  * @return [type]             [description]
-  */
- function fernet_update_user_meta( $user_id, $meta_key, $meta_value, $prev_value = '' ) {
- 	$meta_value = fernet_encrypt( $meta_value );
- 	return update_user_meta( $user_id, $meta_key, $meta_value, $prev_value );
- }
+if( ! function_exists( 'fernet_get_user_meta' ) ) {
+	 /**
+	  * Fernet Get User Meta.
+	  * @param  [type]  $user_id              User ID.
+	  * @param  string  $key                  Key.
+	  * @param  boolean $single               Single.
+	  */
+	 function fernet_get_user_meta( $user_id, $key = '', $single = false ) {
 
- /**
-  * Fernet Get User Meta.
-  * @param  [type]  $user_id               [description]
-  * @param  string  $key                   [description]
-  * @param  boolean $single                [description]
-  * @return [type]           [description]
-  */
- function fernet_get_user_meta( $user_id, $key = '', $single = false ) {
-
-	if( true === $single ) {
-		return fernet_decrypt( get_user_meta( $user_id, $key, $single ) );
-	}
-
-	if( false === $single ) {
-		$meta = get_user_meta( $user_id, $key, $single );
-		foreach( $meta as $meta_value ) {
-			$meta[] = fernet_decrypt( $meta_value );
+		if( true === $single ) {
+			return fernet_decrypt( get_user_meta( $user_id, $key, $single ) );
 		}
-		return $meta;
-	}
 
- }
+		if( false === $single ) {
+			$meta = get_user_meta( $user_id, $key, $single );
+			foreach( $meta as $meta_value ) {
+				$meta[] = fernet_decrypt( $meta_value );
+			}
+			return $meta;
+		}
 
- /**
-  * Fernet Add Option.
-  * @param [type] $option      [description]
-  * @param string $value       [description]
-  * @param string $deprecated  [description]
-  * @param string $autoload    [description]
-  */
- function fernet_add_option( $option, $value = '', $deprecated = '', $autoload = 'yes' ) {
- 	$value = fernet_encrypt( $value );
- 	return add_option( $option, $value, $deprecated, $autoload );
- }
+	 }
+}
 
- /**
-  * Fernet Update Option.
-  * @param  [type] $option                 [description]
-  * @param  [type] $value                  [description]
-  * @param  [type] $autoload               [description]
-  * @return [type]           [description]
-  */
- function fernet_update_option( $option, $value, $autoload = null ) {
- 	$value = fernet_encrypt( $value );
- 	return update_option( $option, $value, $autoload );
- }
+if( ! function_exists( 'fernet_add_option' ) ) {
+	 /**
+	  * Fernet Add Option.
+	  * @param [type] $option      Option.
+	  * @param string $value       Value.
+	  * @param string $deprecated  Deprecated.
+	  * @param string $autoload    Autoload.
+	  */
+	 function fernet_add_option( $option, $value = '', $deprecated = '', $autoload = 'yes' ) {
+	 	$value = fernet_encrypt( $value );
+	 	return add_option( $option, $value, $deprecated, $autoload );
+	 }
+}
 
- /**
-  * Fernet Get Option.
-  * @param  [type]  $option                [description]
-  * @param  boolean $default               [description]
-  * @return [type]           [description]
-  */
- function fernet_get_option( $option, $default = false ) {
- 	$option_data = get_option( $option, $default );
- 	return fernet_decrypt( $option_data );
- }
+if( ! function_exists( 'fernet_update_option' ) ) {
+	 /**
+	  * Fernet Update Option.
+	  * @param  [type] $option                 Option.
+	  * @param  [type] $value                  Value.
+	  * @param  [type] $autoload               Autoload.
+	  */
+	 function fernet_update_option( $option, $value, $autoload = null ) {
+	 	$value = fernet_encrypt( $value );
+	 	return update_option( $option, $value, $autoload );
+	 }
+}
+
+if( ! function_exists( 'fernet_get_option' ) ) {
+	 /**
+	  * Fernet Get Option.
+	  * @param  [type]  $option                Option.
+	  * @param  boolean $default               Default.
+	  */
+	 function fernet_get_option( $option, $default = false ) {
+	 	$option_data = get_option( $option, $default );
+	 	return fernet_decrypt( $option_data );
+	 }
+}

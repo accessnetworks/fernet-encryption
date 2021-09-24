@@ -40,9 +40,10 @@ You can use the following shortcode to decrypt:
 - Illustrations provided by undraw.co
 - Fernent PHP modified from Kelvin Mo - Fernet-PHP
 
-
-
 == Changelog ==
+
+= 1.0.5 =
+* Added Helper Functions.
 
 = 1.0.4 =
 * Updated Readme
