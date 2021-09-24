@@ -123,3 +123,21 @@ if ( ! function_exists( 'fernet_decrypt' ) ) {
 		return $fernet->decode( $token, $ttl );
 	}
 }
+
+if ( ! function_exists( 'fernet_admin_notice' ) ) {
+	/**
+	 * Fernet Admin Notice.
+	 */
+	function fernet_admin_notice() {
+		if ( ! fernet_key_exists() ) {
+			?>
+		<div class="notice notice-warning is-dismissible">
+			<p><strong><?php esc_html_e( 'Warning: You have not defined a Fernet Key.', 'fernet-encryption' ); ?></strong></p>
+			<p><?php esc_html_e( 'We have auto-generated one for you based off the WordPress Salts, we suggest setting a new key or saving this one some place safe.', 'fernet-encryption' ); ?></p>
+			<p><strong><?php esc_html_e( 'Fernet Key:', 'fernet-encryption' ); ?></strong> <?php echo esc_html( fernet_key() ); ?></p>
+		</div>
+			<?php
+		}
+	}
+	add_action( 'admin_notices', 'fernet_admin_notice' );
+}
