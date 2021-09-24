@@ -43,6 +43,19 @@ if ( ! function_exists( 'fernet_generate_key' ) ) {
 	}
 }
 
+if ( ! function_exists( 'fernet_validate_key_length' ) ) {
+	/**
+	 * Feneret Validate Key Length.
+	 */
+	function fernet_validate_key_length( string $key ) {
+		if ( 32 === strlen( $key ) ) {
+			return true;
+		}
+
+		return false;
+	}
+}
+
 if ( ! function_exists( 'fernet_key' ) ) {
 	/**
 	 * Fernet Key
