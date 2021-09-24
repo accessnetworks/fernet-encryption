@@ -21,11 +21,12 @@
 // Include Fernet Encryption Class.
 require_once 'includes/class-fernet.php';
 
+require_once 'includes/helpers.php';
+
 /**
  * Init Fernet.
  */
 function fernet() {
-
 	$fernet = new Fernet( fernet_key() );
 	return $fernet;
 }
