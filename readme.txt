@@ -19,7 +19,9 @@ Fernet Encryption is a plugin that can be used to encrypt and decrypt data in Wo
 
 To setup your key, you need to add the following line to your wp-config file.
 
-`define( 'FERNET_KEY', 'YOUR_FERNET_KEY' );`
+```
+define( 'FERNET_KEY', 'YOUR_FERNET_KEY' );
+```
 
 === How to Use ===
 
