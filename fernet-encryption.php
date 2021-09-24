@@ -9,7 +9,7 @@
  * Plugin Name: Fernet Encryption
  * Plugin URI: https://accessnetworks.github.io/fernet-encryption/
  * Description: Secure WordPress data with Fernet Encryption.
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: Access Networks
  * Author URI: https://www.accessnetworks.com
  * Text Domain: fernet-encryption
@@ -23,54 +23,62 @@ require_once 'includes/class-fernet.php';
 require_once 'includes/helpers.php';
 require_once 'includes/class-fernet-shortcodes.php';
 
-/**
- * Init Fernet.
- */
-function fernet() {
-	$fernet = new Fernet( fernet_key() );
-	return $fernet;
-}
-
-/**
- * Fernet Key
- *
- * @return string $key Key used for encryption.
- */
-function fernet_key() {
-
-	if ( ! defined( 'FERNET_KEY' ) ) {
-		$key = substr( NONCE_SALT, 0, 32 );
-		define( 'FERNET_KEY', $key );
-	} else {
-		$key = FERNET_KEY;
+if ( ! function_exists( 'fernet' ) ) {
+	/**
+	 * Init Fernet.
+	 */
+	function fernet() {
+		$fernet = new Fernet( fernet_key() );
+		return $fernet;
 	}
-
-	return $key;
 }
 
-/**
- * Fernet Encode.
- *
- * @param [type] $data Data to be encoded.
- * @param array  $args Arguments.
- * @return string $data Encoded data.
- */
-function fernet_encrypt( $data, $args = array() ) {
-	$key    = isset( $args['key'] ) ? $args['key'] : fernet_key();
-	$fernet = fernet( $key );
-	return $fernet->encode( $data );
+if ( ! function_exists( 'fernet_key' ) ) {
+	/**
+	 * Fernet Key
+	 *
+	 * @return string $key Key used for encryption.
+	 */
+	function fernet_key() {
+
+		if ( ! defined( 'FERNET_KEY' ) ) {
+			$key = substr( NONCE_SALT, 0, 32 );
+			define( 'FERNET_KEY', $key );
+		} else {
+			$key = FERNET_KEY;
+		}
+
+		return $key;
+	}
 }
 
-/**
- * Fernet Decode.
- *
- * @param string $token Token to decode.
- * @param array  $args Arguments.
- * @return string $data Decoded data.
- */
-function fernet_decrypt( string $token, $args = array() ) {
-	$key    = isset( $args['key'] ) ? $args['key'] : fernet_key();
-	$ttl    = isset( $args['ttl'] ) ? abs( $args['ttl'] ) : null;
-	$fernet = fernet( $key );
-	return $fernet->decode( $token, $ttl );
+if ( ! function_exists( 'fernet_encrypt' ) ) {
+	/**
+	 * Fernet Encode.
+	 *
+	 * @param [type] $data Data to be encoded.
+	 * @param array  $args Arguments.
+	 * @return string $data Encoded data.
+	 */
+	function fernet_encrypt( $data, $args = array() ) {
+		$key    = isset( $args['key'] ) ? $args['key'] : fernet_key();
+		$fernet = fernet( $key );
+		return $fernet->encode( $data );
+	}
+}
+
+if ( ! function_exists( 'fernet_decrypt' ) ) {
+	/**
+	 * Fernet Decode.
+	 *
+	 * @param string $token Token to decode.
+	 * @param array  $args Arguments.
+	 * @return string $data Decoded data.
+	 */
+	function fernet_decrypt( string $token, $args = array() ) {
+		$key    = isset( $args['key'] ) ? $args['key'] : fernet_key();
+		$ttl    = isset( $args['ttl'] ) ? abs( $args['ttl'] ) : null;
+		$fernet = fernet( $key );
+		return $fernet->decode( $token, $ttl );
+	}
 }
