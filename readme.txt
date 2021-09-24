@@ -35,6 +35,18 @@ You can use the following shortcode to decrypt:
 
 `[fernet-decrypt]YOUR-FERNET-TOKEN[/fernet-decrypt]`
 
+We have also added useful helper functions:
+
+ * fernet_get_post_meta
+ * fernet_add_post_meta
+ * fernet_update_post_meta
+ * fernet_get_user_meta
+ * fernet_add_user_meta
+ * fernet_update_user_meta
+ * fernet_add_option
+ * fernet_get_option
+ * fernet_update_option
+
 === Credit ===
 
 - Illustrations provided by undraw.co
