@@ -1,7 +1,7 @@
 === Fernet Encryption ===
 Contributors: bhubbard, accessnetworks
 Donate link: https://accessnetworks.com
-Tags: fernet, encryption
+Tags: fernet, encryption, security
 Requires at least: 4.5
 Tested up to: 5.8
 Requires PHP: 7.0
