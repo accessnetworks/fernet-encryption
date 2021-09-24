@@ -62,6 +62,24 @@ if ( ! function_exists( 'fernet_key' ) ) {
 	}
 }
 
+if ( ! function_exists( 'fernet_key_exists' ) ) {
+
+	/**
+	 * Fernet Key Exists.
+	 *
+	 * @return bool Return if key exists.
+	 */
+	function fernet_key_exists() {
+
+		if ( defined( 'FERNET_KEY' ) ) {
+			return true;
+		}
+
+		return false;
+
+	}
+}
+
 if ( ! function_exists( 'fernet_encrypt' ) ) {
 	/**
 	 * Fernet Encode.
@@ -91,11 +109,4 @@ if ( ! function_exists( 'fernet_decrypt' ) ) {
 		$fernet = fernet( $key );
 		return $fernet->decode( $token, $ttl );
 	}
-}
-
-
-add_action('wp_head', 'test');
-function test() {
-	$fernet = new Fernet( fernet_key() );
-	var_dump( $fernet->generate_key() );
 }
