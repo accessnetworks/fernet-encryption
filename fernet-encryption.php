@@ -46,6 +46,9 @@ if ( ! function_exists( 'fernet_generate_key' ) ) {
 if ( ! function_exists( 'fernet_validate_key_length' ) ) {
 	/**
 	 * Feneret Validate Key Length.
+	 *
+	 * @param string $key Key.
+	 * @return bool Is Key a valid length.
 	 */
 	function fernet_validate_key_length( string $key ) {
 		if ( 32 === strlen( $key ) ) {

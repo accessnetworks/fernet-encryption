@@ -126,7 +126,7 @@ if ( ! function_exists( 'fernet_add_option' ) ) {
 	 */
 	function fernet_add_option( $option, $value = '', $deprecated = '', $autoload = 'yes' ) {
 		$value = fernet_encrypt( $value );
-		return add_option( $option, $value, $deprecated, $autoload );
+		return add_option( $option, $value, '', $autoload );
 	}
 }
 
