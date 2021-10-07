@@ -23,6 +23,7 @@ require_once 'includes/class-fernet.php';
 require_once 'includes/helpers.php';
 require_once 'includes/class-fernet-shortcodes.php';
 require_once 'includes/class-fernet-rest-api.php';
+require_once 'includes/class-fernet-cli.php';
 
 if ( ! function_exists( 'fernet' ) ) {
 	/**
