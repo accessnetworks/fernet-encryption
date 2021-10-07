@@ -60,6 +60,10 @@ We have also added useful helper functions:
 
 == Changelog ==
 
+= 1.0.6 =
+* Add support for WordPress Rest API.
+* Add support for WordPress CLI.
+
 = 1.0.5 =
 * Added Helper Functions.
 
