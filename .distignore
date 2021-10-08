@@ -6,7 +6,11 @@
 .eslintignore
 .eslintrc
 .git
+.wordpress-org
+.gitattributes
+.svnignore
 .gitignore
+.github
 .gitlab-ci.yml
 .travis.yml
 .DS_Store
