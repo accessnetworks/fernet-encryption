@@ -5,7 +5,7 @@ Tags: fernet, encryption, security
 Requires at least: 4.5
 Tested up to: 5.8
 Requires PHP: 7.0
-Stable tag: 1.0.5
+Stable tag: 1.0.7
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -59,6 +59,9 @@ We have also added useful helper functions:
 - Fernent PHP modified from Kelvin Mo - Fernet-PHP
 
 == Changelog ==
+
+= 1.0.7 =
+* Readme improvements
 
 = 1.0.6 =
 * Add support for WordPress Rest API.
